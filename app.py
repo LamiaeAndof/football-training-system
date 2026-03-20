@@ -279,12 +279,17 @@ st.markdown("""
 
 @st.cache_data(show_spinner=False)
 def load_data():
-    data_dir = os.path.join(ROOT, "data")
+    def find_file(filename):
+        path_data = os.path.join(ROOT, "data", filename)
+        path_root = os.path.join(ROOT, filename)
+        if os.path.exists(path_data):
+            return path_data
+        return path_root
 
-    templates_path  = os.path.join(data_dir, "exercise_templates.csv")
-    sessions_path   = os.path.join(data_dir, "exercise_sessions.csv")
-    microcycle_path = os.path.join(data_dir, "microcycle_reference.csv")
-    readiness_path  = os.path.join(data_dir, "optional_player_readiness.csv")
+    templates_path  = find_file("exercise_templates.csv")
+    sessions_path   = find_file("exercise_sessions.csv")
+    microcycle_path = find_file("microcycle_reference.csv")
+    readiness_path  = find_file("optional_player_readiness.csv")
 
     templates = pd.read_csv(templates_path)
 
